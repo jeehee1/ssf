@@ -7,7 +7,7 @@ const StudygroupSchema = new Schema({
   location: String,
   address: String,
   date: Date,
-  images: [String],
+  image: String,
   description: String,
   capacity: Number,
   participants: [String],
