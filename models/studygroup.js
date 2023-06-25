@@ -11,17 +11,6 @@ const StudygroupSchema = new Schema({
   description: String,
   capacity: Number,
   participants: [String],
-  geometry: {
-    type: {
-        type: String,
-        enum: ['Point'],
-        required: true
-    },
-    coordinates: {
-        type: [Number],
-        required: true
-    }
-},
 });
 
 module.exports =  mongoose.model("Studygroup", StudygroupSchema);

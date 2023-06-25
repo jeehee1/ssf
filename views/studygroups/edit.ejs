@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Studygroup</title>
+</head>
+<body>
+    <h1>스터디그룹 업데이트</h1>
+    <form action="/studygroups/<%=studygroup._id %>?_method=PUT" method="POST">
+      <div>
+        <label for="title">스터디 이름</label>
+        <input type="text" id="title" name="studygroup[title]" value="<%=studygroup.title  %>"/>
+      </div>
+      <div>
+        <label for="capacity">정원</label>
+        <input type="number" id="capacity" name="studygroup[capacity]" value="<%=studygroup.capacity  %>"/>
+      </div>
+      <div>
+        <label for="subject">과목</label>
+        <input type="text" id="subject" name="studygroup[subject]" value="<%=studygroup.subject  %>"/>
+      </div>
+      <div>
+        <label for="location">위치</label>
+        <input type="text" id="location" name="studygroup[location]" value="<%=studygroup.location  %>"/>
+      </div>
+      <button>저장</button>
+    </form>
+</body>
+</html>

@@ -7,9 +7,10 @@
   </head>
   <body>
     <h1>StudyGroup Lists</h1>
+    <a href="/studygroups/new">스터디그룹 만들기</a>
     <ul>
       <% for(const group of studygroups){ %>
-      <li><%= group.title %></li>
+      <li><a href="/studygroups/<%=group.id %>"><%= group.title %></a></li>
       <% } %>
     </ul>
   </body>
