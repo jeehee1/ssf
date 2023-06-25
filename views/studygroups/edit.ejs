@@ -1,21 +1,71 @@
 <% layout('layouts/boilerplate') -%>
-    <h1>스터디그룹 업데이트</h1>
-    <form action="/studygroups/<%=studygroup._id %>?_method=PUT" method="POST">
-      <div>
-        <label for="title">스터디 이름</label>
-        <input type="text" id="title" name="studygroup[title]" value="<%=studygroup.title  %>"/>
+    <div class="col-6 offset-3">
+        <h1>스터디그룹 만들기</h1>
+        <form action="/studygroups/<%=studygroup._id %>?_method=PUT" method="POST">
+          <div class="my-3">
+            <label class="form-label" for="title">스터디 이름</label>
+            <input
+              class="form-control"
+              type="text"
+              id="title"
+              name="studygroup[title]"
+              placeholder="스터디그룹명"
+              value="<%= studygroup.title %>"
+            />
+          </div>
+          <div class="container my-3">
+            <div class="row">
+              <div class="col ps-0">
+                <label class="form-label" for="capacity">정원</label>
+                <input
+                  class="form-control"
+                  type="number"
+                  id="capacity"
+                  name="studygroup[capacity]"
+                  placeholder="0"
+                  value="<%= studygroup.capacity %>"
+
+                />
+              </div>
+              <div class="col pe-0">
+                <label class="form-label" for="subject">과목</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  id="subject"
+                  name="studygroup[subject]"
+                  placeholder="과목"
+                  value="<%= studygroup.subject %>"
+
+                />
+              </div>
+            </div>
+          </div>
+          <div class="my-3">
+            <label class="form-label" for="location">위치</label>
+            <input
+              class="form-control"
+              type="text"
+              id="location"
+              name="studygroup[location]"
+              placeholder="위치"
+              value="<%= studygroup.location %>"
+
+            />
+          </div>
+          <div class="my-3">
+            <label class="form-label" for="description">스터디 설명</label>
+            <textarea
+              class="form-control"
+              type="text"
+              id="description"
+              name="studygroup[description]"
+              style="height: 240px;"
+            ><%=studygroup.description %></textarea>
+          </div>
+          <div>
+            <button type="submit" class="my-3 btn btn-success">저장하기</button>
+          </div>
+        </form>
       </div>
-      <div>
-        <label for="capacity">정원</label>
-        <input type="number" id="capacity" name="studygroup[capacity]" value="<%=studygroup.capacity  %>"/>
-      </div>
-      <div>
-        <label for="subject">과목</label>
-        <input type="text" id="subject" name="studygroup[subject]" value="<%=studygroup.subject  %>"/>
-      </div>
-      <div>
-        <label for="location">위치</label>
-        <input type="text" id="location" name="studygroup[location]" value="<%=studygroup.location  %>"/>
-      </div>
-      <button>저장</button>
-    </form>
+      
