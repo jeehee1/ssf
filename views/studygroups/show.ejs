@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Show Studygroup</title>
-  </head>
-  <body>
+<% layout('../layouts/boilerplate') -%>
     <h1><%= studygroup.title %></h1>
     <h2><%= studygroup.subject %></h2>
     <p><%= `${studygroup.participants.length}/${studygroup.capacity}` %></p>
@@ -19,5 +12,4 @@
     >
       <button>삭제</button>
     </form>
-  </body>
-</html>
+

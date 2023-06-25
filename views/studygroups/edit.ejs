@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Studygroup</title>
-</head>
-<body>
+<% layout('../layouts/boilerplate') -%>
     <h1>스터디그룹 업데이트</h1>
     <form action="/studygroups/<%=studygroup._id %>?_method=PUT" method="POST">
       <div>
@@ -26,5 +19,3 @@
       </div>
       <button>저장</button>
     </form>
-</body>
-</html>

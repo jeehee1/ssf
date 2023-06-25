@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
+const engine = require("ejs-mate");
 const Studygroup = require("./models/studygroup");
 
 // mongoose.set("strickQuery", true);
@@ -15,6 +16,7 @@ db.once("open", () => {
 
 const app = express();
 
+app.engine('ejs', engine);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
@@ -57,11 +59,11 @@ app.put("/studygroups/:id", async (req, res) => {
   res.redirect(`/studygroups/${id}`);
 });
 
-app.delete('/studygroups/:id', async(req, res) => {
-  const {id} = req.params;
+app.delete("/studygroups/:id", async (req, res) => {
+  const { id } = req.params;
   await Studygroup.findByIdAndDelete(id);
-  res.redirect('/studygroups');
-})
+  res.redirect("/studygroups");
+});
 
 app.get("/", (req, res) => {
   res.render("home");
