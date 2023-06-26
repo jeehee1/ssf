@@ -1,31 +1,39 @@
 <% layout('layouts/boilerplate') -%>
-<h1>StudyGroup Lists</h1>
-<a href="/studygroups/new">스터디그룹 만들기</a>
-<ul>
-  <div class="container">
+<div class="container col-10 offset-1 p-0">
+  <div class="mx-3">
+    <h1 class="my-3">StudyGroup Lists</h1>
     <div class="row">
+      <a
+        href="/studygroups/new"
+        style="width: 200px"
+        class="btn btn-success btn-sm ms-auto"
+        >스터디그룹 만들기</a
+      >
+    </div>
+  </div>
+  <ul class="m-0 p-0">
+    <div class="row justify-content-between align-items-center">
       <% for(const group of studygroups){ %>
-        <div class="card text-dark bg-light m-3 col-md-5">
-          <div class="row">
-            <div class="col-md-7">
-              <img class="img-fluid" src="<%=group.image %>" />
-            </div>
-            <div class="col-md-5">
-              <div class="card-body">
-                <h5 class="card-title"><%= group.title %></h5>
-                <p class="card-text">
-                  <small class="text-muted"
-                    ><%= group.participants.length %>/<%=group.capacity
-                    %></small
-                  >
-                </p>
-                <p class="card-text text-truncat"><%= group.subject %></p>
-                <a href="/studygroups/<%= group._id %>">상세정보</a>
-              </div>
+      <div class="card text-dark bg-light m-3 col-md-5">
+        <div class="row justify-content-center align-items-center">
+          <div class="col-md-7">
+            <img class="img-fluid" src="<%=group.image %>" />
+          </div>
+          <div class="col-md-5">
+            <div class="card-body">
+              <h5 class="card-title"><%= group.title %></h5>
+              <p class="card-text">
+                <small class="text-muted"
+                  ><%= group.participants.length %>/<%=group.capacity %></small
+                >
+              </p>
+              <p class="card-text text-truncat"><%= group.subject %></p>
+              <a href="/studygroups/<%= group._id %>">상세정보</a>
             </div>
           </div>
         </div>
+      </div>
       <% } %>
     </div>
-  </div>
-</ul>
+  </ul>
+</div>
