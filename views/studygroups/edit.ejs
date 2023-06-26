@@ -1,7 +1,7 @@
 <% layout('layouts/boilerplate') -%>
 <div class="col-6 offset-3">
   <h1>스터디그룹 수정하기</h1>
-  <form action="/studygroups/<%=studygroup._id %>?_method=PUT" method="POST">
+  <form action="/studygroups/<%=studygroup._id %>?_method=PUT" method="POST" class="needs-validation" novalidate>
     <div class="my-3">
       <label class="form-label" for="title">스터디 이름</label>
       <input
@@ -11,6 +11,7 @@
         name="studygroup[title]"
         placeholder="스터디그룹명"
         value="<%= studygroup.title %>"
+        required
       />
     </div>
     <div class="container my-3">
@@ -24,6 +25,7 @@
             name="studygroup[capacity]"
             placeholder="0"
             value="<%= studygroup.capacity %>"
+            required
           />
         </div>
         <div class="col pe-0">
@@ -35,6 +37,7 @@
             name="studygroup[subject]"
             placeholder="과목"
             value="<%= studygroup.subject %>"
+            required
           />
         </div>
       </div>
@@ -48,6 +51,7 @@
         name="studygroup[location]"
         placeholder="위치"
         value="<%= studygroup.location %>"
+        required
       />
     </div>
     <div class="my-3">
@@ -69,6 +73,7 @@
         id="description"
         name="studygroup[description]"
         style="height: 240px"
+        required
       >
 <%=studygroup.description %></textarea
       >

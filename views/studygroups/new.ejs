@@ -1,7 +1,7 @@
 <% layout('layouts/boilerplate') -%>
-<div class="col-6 offset-3">
-  <h1>스터디그룹 만들기</h1>
-  <form action="/studygroups" method="POST">
+<div class="col-6 offset-3 my-3">
+  <h1 class="text-center">스터디그룹 만들기</h1>
+  <form action="/studygroups" method="POST" class="needs-validation" novalidate>
     <div class="my-3">
       <label class="form-label" for="title">스터디 이름</label>
       <input
@@ -10,6 +10,7 @@
         id="title"
         name="studygroup[title]"
         placeholder="스터디그룹명"
+        required
       />
     </div>
     <div class="container my-3">
@@ -22,6 +23,7 @@
             id="capacity"
             name="studygroup[capacity]"
             placeholder="0"
+            required
           />
         </div>
         <div class="col pe-0">
@@ -32,6 +34,7 @@
             id="subject"
             name="studygroup[subject]"
             placeholder="과목"
+            required
           />
         </div>
       </div>
@@ -44,6 +47,7 @@
         id="location"
         name="studygroup[location]"
         placeholder="위치"
+        required
       />
     </div>
     <div class="my-3">
@@ -57,6 +61,7 @@
         type="text"
         id="description"
         name="studygroup[description]"
+        required
       ></textarea>
     </div>
     <div>
