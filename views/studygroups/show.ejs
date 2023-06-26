@@ -1,15 +1,57 @@
 <% layout('layouts/boilerplate') -%>
-    <h1><%= studygroup.title %></h1>
-    <h2><%= studygroup.subject %></h2>
-    <p><%= `${studygroup.participants.length}/${studygroup.capacity}` %></p>
-    <p><%= studygroup.location%></p>
-    <p><%= studygroup.description%></p>
-    <img src="<%= studygroup.images %>" />
-    <a href="/studygroups/<%=studygroup._id  %>/edit">수정하기</a>
-    <form
-      action="/studygroups/<%=studygroup._id %>?_method=DELETE"
-      method="POST"
-    >
-      <button>삭제</button>
-    </form>
-
+<div class="container my-5">
+  <div class="container">
+    <div class="row my-5 justify-content-end">
+      <div class="col-1 p-0 mx-2">
+        <a
+          class="btn btn-warning text-light"
+          href="/studygroups/<%=studygroup._id  %>/edit"
+          >수정하기</a
+        >
+      </div>
+      <div class="col-1 p-0 mx-2">
+        <form
+          action="/studygroups/<%=studygroup._id %>?_method=DELETE"
+          method="POST"
+        >
+          <button class="btn btn-danger text-light">삭제</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <div class="card">
+        <div class="container">
+          <div class="row align-items-center my-3">
+            <div class="col-10">
+              <h1><%= studygroup.title %></h1>
+            </div>
+            <div class="col-2 align-self-end">
+              <p class="text-muted text-end"><%= studygroup.location%></p>
+            </div>
+          </div>
+        </div>
+        <img src="<%= studygroup.image %>" />
+        <div class="card-body">
+          <div class="container">
+            <div class="row justify-content-between align-items-center">
+              <div class="col-3">
+                <p class="m-0">
+                  <%= `${studygroup.participants.length}/${studygroup.capacity}`
+                  %>
+                </p>
+              </div>
+              <div class="col-3 text-end">
+                <p class="btn btn-primary btn-sm m-0"><%= studygroup.subject %></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <p><%= studygroup.description%></p>
+    </div>
+  </div>
+</div>
