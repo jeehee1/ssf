@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
 
-const Comment = require("./models/comment");
+const Comment = require("../models/comment");
 
 const ExpressError = require("../utils/ExpressError");
 const catchAsync = require("../utils/catchAsync");
 
-const { commentSchema } = require("./utils/validateSchemas");
+const { commentSchema } = require("../utils/validateSchemas");
 
 const validateComment = (req, res, next) => {
   const { error } = commentSchema.validate(req.body);
