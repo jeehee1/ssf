@@ -43,7 +43,9 @@
                 </p>
               </div>
               <div class="col-3 text-end">
-                <p class="btn btn-primary btn-sm m-0"><%= studygroup.subject %></p>
+                <p class="btn btn-primary btn-sm m-0">
+                  <%= studygroup.subject %>
+                </p>
               </div>
             </div>
           </div>
@@ -53,5 +55,33 @@
     <div class="col-6">
       <p><%= studygroup.description%></p>
     </div>
+  </div>
+  <div class="mt-5">
+    <form
+      action="/studygroups/<%= studygroup._id %>/comments"
+      method="POST"
+      class="needs-validation"
+      novalidate
+    >
+      <div class="form-group col-6 offset-3">
+        <label class="form-text" for="comment">참여자들의 한마디</label>
+        <textarea
+          class="form-control my-3"
+          name="comment[body]"
+          id="comment"
+          cols="30"
+          rows="3"
+          required
+        ></textarea>
+        <button class="btn btn-success my-3">등록하기</button>
+      </div>
+    </form>
+    <ul>
+      <% for(const comment of studygroup.comments){ %>
+
+      <li><div><%= comment.body %> - <%= comment.date.toString() %></div></li>
+
+      <% } %>
+    </ul>
   </div>
 </div>

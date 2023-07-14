@@ -11,6 +11,12 @@ const StudygroupSchema = new Schema({
   description: String,
   capacity: Number,
   participants: [String],
+  comments: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Comment",
+    },
+  ],
 });
 
-module.exports =  mongoose.model("Studygroup", StudygroupSchema);
+module.exports = mongoose.model("Studygroup", StudygroupSchema);
