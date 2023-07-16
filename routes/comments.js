@@ -29,6 +29,10 @@ router.post(
     studygroup.comments.push(comment);
     await comment.save();
     await studygroup.save();
+    if (!studygroup) {
+      req.flash("error", "스터디그룹을 찾을 수 없습니다");
+      return res.redirect("/studygroups");
+    }
     res.redirect(`/studygroups/${id}`);
   })
 );
