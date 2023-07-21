@@ -7,7 +7,9 @@ const session = require("express-session");
 const flash = require("connect-flash");
 const ExpressError = require("./utils/ExpressError");
 
-// mongoose.set("strickQuery", true);
+const passport = require("passport");
+const User = require("./models/user");
+
 mongoose.connect("mongodb://localhost:27017/ssf");
 
 const db = mongoose.connection;
@@ -18,6 +20,7 @@ db.once("open", () => {
 
 const app = express();
 
+const users = require("./routes/users");
 const studygroups = require("./routes/studygroups");
 const comments = require("./routes/comments");
 
@@ -45,12 +48,25 @@ app.use(
 );
 app.use(flash());
 
+app.use(passport.session());
+passport.use(User.createStrategy());
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   next();
 });
 
+app.use("/makefakeuser", async (req, res, next) => {
+  const user = new User({ email: "jjjj@j.com", username: "jj " });
+  const newUser = await User.register(user, "123456");
+  res.send(newUser);
+});
+
+app.use("/", users);
 app.use("/studygroups", studygroups);
 app.use("/studygroups/:id/comments", comments);
 

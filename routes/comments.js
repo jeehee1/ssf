@@ -6,6 +6,8 @@ const Comment = require("../models/comment");
 const ExpressError = require("../utils/ExpressError");
 const catchAsync = require("../utils/catchAsync");
 
+const { isLoggedIn } = require("../middleware");
+
 const { commentSchema } = require("../utils/validateSchemas");
 
 const validateComment = (req, res, next) => {
@@ -21,6 +23,7 @@ const validateComment = (req, res, next) => {
 
 router.post(
   "/",
+  isLoggedIn,
   validateComment,
   catchAsync(async (req, res, next) => {
     const { id } = req.params;

@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
-
 const Studygroup = require("../models/studygroup");
 const ExpressError = require("../utils/ExpressError");
 const catchAsync = require("../utils/catchAsync");
 const { studygroupSchema } = require("../utils/validateSchemas");
+const { isLoggedIn } = require("../middleware");
 
 const validateStudygroup = (req, res, next) => {
   const { error } = studygroupSchema.validate(req.body);
@@ -26,6 +26,7 @@ router.get(
 
 router.post(
   "/",
+  isLoggedIn,
   validateStudygroup,
   catchAsync(async (req, res, next) => {
     const studygroup = new Studygroup({ ...req.body.studygroup });
@@ -41,6 +42,7 @@ router.get("/new", (req, res) => {
 
 router.get(
   "/:id/edit",
+  isLoggedIn,
   catchAsync(async (req, res, next) => {
     const { id } = req.params;
     const studygroup = await Studygroup.findById(id);
@@ -67,6 +69,7 @@ router.get(
 
 router.put(
   "/:id",
+  isLoggedIn,
   validateStudygroup,
   catchAsync(async (req, res, next) => {
     const { id } = req.params;
@@ -83,6 +86,7 @@ router.put(
 
 router.delete(
   "/:id",
+  isLoggedIn,
   catchAsync(async (req, res, next) => {
     const { id } = req.params;
     await Studygroup.findByIdAndDelete(id);
