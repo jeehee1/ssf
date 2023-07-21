@@ -1,14 +1,11 @@
 const express = require("express");
-const router = express.Router();
-
+const router = express.Router({ mergeParams: true });
 const Comment = require("../models/comment");
-
 const ExpressError = require("../utils/ExpressError");
 const catchAsync = require("../utils/catchAsync");
-
 const { isLoggedIn } = require("../middleware");
-
 const { commentSchema } = require("../utils/validateSchemas");
+const Studygroup = require("../models/studygroup");
 
 const validateComment = (req, res, next) => {
   const { error } = commentSchema.validate(req.body);
@@ -27,8 +24,13 @@ router.post(
   validateComment,
   catchAsync(async (req, res, next) => {
     const { id } = req.params;
-    const comment = new Comment({ ...req.body.comment, date: new Date() });
     const studygroup = await Studygroup.findById(id);
+    console.log(id);
+    console.log(studygroup);
+    const comment = new Comment({ ...req.body.comment, date: new Date() });
+    comment.author = req.user._id;
+    console.log(comment);
+
     studygroup.comments.push(comment);
     await comment.save();
     await studygroup.save();

@@ -17,6 +17,10 @@ const StudygroupSchema = new Schema({
       ref: "Comment",
     },
   ],
+  author: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  }
 });
 
 module.exports = mongoose.model("Studygroup", StudygroupSchema);

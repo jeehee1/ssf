@@ -36,6 +36,7 @@
         <div class="card-body">
           <div class="container">
             <div class="row justify-content-between align-items-center">
+              <div>리더 <%= studygroup.author.username %></div>
               <div class="col-3">
                 <p class="m-0">
                   <%= `${studygroup.participants.length}/${studygroup.capacity}`
@@ -78,9 +79,7 @@
     </form>
     <ul>
       <% for(const comment of studygroup.comments){ %>
-
-      <li><div><%= comment.body %> - <%= comment.date.toString() %></div></li>
-
+      <li><div><%= comment.body %> - <%= comment.date.toString() %> <%= comment.author.username %> </div></li>
       <% } %>
     </ul>
   </div>

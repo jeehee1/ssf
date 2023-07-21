@@ -31,7 +31,6 @@ app.set("views", path.join(__dirname, "views"));
 //express가 url의 body를 parser 하도록 설정
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
-
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use(

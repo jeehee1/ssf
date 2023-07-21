@@ -45,6 +45,7 @@ router.post(
   (req, res) => {
     req.flash("success", "성공적으로 로그인하였습니다");
     const redirectUrl = res.locals.returnTo;
+    console.log(req.current)
     res.redirect(redirectUrl);
   }
 );

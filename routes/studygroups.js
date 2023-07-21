@@ -58,7 +58,10 @@ router.get(
   "/:id",
   catchAsync(async (req, res, next) => {
     const { id } = req.params;
-    const studygroup = await Studygroup.findById(id).populate("comments");
+    const studygroup = await Studygroup.findById(id)
+      .populate({ path: "comments", populate: { path: "author" } })
+      .populate("author");
+    console.log(studygroup);
     if (!studygroup) {
       req.flash("error", "스터디그룹을 찾을 수 없습니다");
       return res.redirect("/studygroups");
