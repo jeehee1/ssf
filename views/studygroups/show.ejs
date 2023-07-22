@@ -1,5 +1,6 @@
 <% layout('layouts/boilerplate') -%>
 <div class="container my-5">
+  <% if(currentUser && studygroup.author.equals(currentUser._id)){ %>
   <div class="container">
     <div class="row my-5 justify-content-end">
       <div class="col-2 p-0 mx-2">
@@ -19,6 +20,7 @@
       </div>
     </div>
   </div>
+  <% } %>
   <div class="row">
     <div class="col-6">
       <div class="card">
@@ -79,7 +81,12 @@
     </form>
     <ul>
       <% for(const comment of studygroup.comments){ %>
-      <li><div><%= comment.body %> - <%= comment.date.toString() %> <%= comment.author.username %> </div></li>
+      <li>
+        <div>
+          <%= comment.body %> - <%= comment.date.toString() %> <%=
+          comment.author.username %>
+        </div>
+      </li>
       <% } %>
     </ul>
   </div>
