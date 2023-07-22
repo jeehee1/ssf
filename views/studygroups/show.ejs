@@ -86,6 +86,12 @@
           <%= comment.body %> - <%= comment.date.toString() %> <%=
           comment.author.username %>
         </div>
+        <form
+          action="/studygroups/<%= studygroup._id %>/comments/<%= comment._id %>?_method=DELETE"
+          method="POST"
+        >
+          <button>삭제</button>
+        </form>
       </li>
       <% } %>
     </ul>

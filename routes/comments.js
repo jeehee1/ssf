@@ -6,6 +6,7 @@ const catchAsync = require("../utils/catchAsync");
 const { isLoggedIn } = require("../middleware");
 const { commentSchema } = require("../utils/validateSchemas");
 const Studygroup = require("../models/studygroup");
+const { checkPreferences } = require("joi");
 
 const validateComment = (req, res, next) => {
   const { error } = commentSchema.validate(req.body);
@@ -38,6 +39,18 @@ router.post(
       req.flash("error", "스터디그룹을 찾을 수 없습니다");
       return res.redirect("/studygroups");
     }
+    res.redirect(`/studygroups/${id}`);
+  })
+);
+
+router.delete(
+  "/:commentId",
+  isLoggedIn,
+  catchAsync(async (req, res, next) => {
+    const { id, commentId } = req.params;
+    await Studygroup.findByIdAndUpdate(id, { $pull: { comments: commentId } });
+    await Comment.findByIdAndDelete(commentId);
+    req.flash("success", "댓글이 삭제되었습니다.");
     res.redirect(`/studygroups/${id}`);
   })
 );
