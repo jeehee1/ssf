@@ -9,38 +9,20 @@ const {
 } = require("../middleware");
 const { commentSchema } = require("../utils/validateSchemas");
 const Studygroup = require("../models/studygroup");
+const comments = require("../controllers/comments");
 
 router.post(
   "/",
   isLoggedIn,
   validateComment,
-  catchAsync(async (req, res, next) => {
-    const { id } = req.params;
-    const studygroup = await Studygroup.findById(id);
-    const comment = new Comment({ ...req.body.comment, date: new Date() });
-    comment.author = req.user._id;
-    studygroup.comments.push(comment);
-    await comment.save();
-    await studygroup.save();
-    if (!studygroup) {
-      req.flash("error", "스터디그룹을 찾을 수 없습니다");
-      return res.redirect("/studygroups");
-    }
-    res.redirect(`/studygroups/${id}`);
-  })
+  catchAsync(comments.createComment)
 );
 
 router.delete(
   "/:commentId",
   isLoggedIn,
   isCommentAuthor,
-  catchAsync(async (req, res, next) => {
-    const { id, commentId } = req.params;
-    await Studygroup.findByIdAndUpdate(id, { $pull: { comments: commentId } });
-    await Comment.findByIdAndDelete(commentId);
-    req.flash("success", "댓글이 삭제되었습니다.");
-    res.redirect(`/studygroups/${id}`);
-  })
+  catchAsync(comments.deleteComment)
 );
 
 module.exports = router;
