@@ -3,10 +3,9 @@ const router = express.Router({ mergeParams: true });
 const Comment = require("../models/comment");
 const ExpressError = require("../utils/ExpressError");
 const catchAsync = require("../utils/catchAsync");
-const { isLoggedIn } = require("../middleware");
+const { isLoggedIn, isCommentAuthor } = require("../middleware");
 const { commentSchema } = require("../utils/validateSchemas");
 const Studygroup = require("../models/studygroup");
-const { checkPreferences } = require("joi");
 
 const validateComment = (req, res, next) => {
   const { error } = commentSchema.validate(req.body);
@@ -46,6 +45,7 @@ router.post(
 router.delete(
   "/:commentId",
   isLoggedIn,
+  isCommentAuthor,
   catchAsync(async (req, res, next) => {
     const { id, commentId } = req.params;
     await Studygroup.findByIdAndUpdate(id, { $pull: { comments: commentId } });
