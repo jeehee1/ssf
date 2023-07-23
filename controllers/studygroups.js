@@ -6,6 +6,7 @@ module.exports.index = async (req, res) => {
 };
 
 module.exports.renderNewStudygroupForm = (req, res) => {
+  req.session.returnto = "/studygroups/new";
   res.render("studygroups/new");
 };
 
@@ -36,6 +37,7 @@ module.exports.showStudygroup = async (req, res) => {
     req.flash("error", "스터디그룹을 찾을 수 없습니다");
     return res.redirect("/studygroups");
   }
+  req.session.returnTo = `/studygroups/${id}`;
   res.render("studygroups/show", { studygroup });
 };
 

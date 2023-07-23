@@ -35,7 +35,7 @@ router.get("/login", (req, res) => {
 router.post(
   "/login",
   (req, res, next) => {
-    res.locals.returnTo = req.session.returnTo || "studygroups";
+    res.locals.returnTo = req.session.returnTo || "/studygroups";
     next();
   },
   passport.authenticate("local", {
@@ -45,7 +45,7 @@ router.post(
   (req, res) => {
     req.flash("success", "성공적으로 로그인하였습니다");
     const redirectUrl = res.locals.returnTo;
-    console.log(req.current)
+    req.session.returnTo = null;
     res.redirect(redirectUrl);
   }
 );
