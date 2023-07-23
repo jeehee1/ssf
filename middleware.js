@@ -1,5 +1,7 @@
 const Studygroup = require("./models/studygroup");
 const Comment = require("./models/comment");
+const { studygroupSchema, commentSchema } = require("./utils/validateSchemas");
+const ExpressError = require("./utils/ExpressError");
 
 module.exports.isLoggedIn = (req, res, next) => {
   console.log("REQ USER : " + req.user);
@@ -9,6 +11,27 @@ module.exports.isLoggedIn = (req, res, next) => {
     return res.redirect("/login");
   }
   next();
+};
+
+module.exports.validateStudygroup = (req, res, next) => {
+  const { error } = studygroupSchema.validate(req.body);
+  if (error) {
+    const errorMessage = error.details.map((el) => el.message).join(", ");
+    throw new ExpressError(errorMessage, 400);
+  } else {
+    next();
+  }
+};
+
+module.exports.validateComment = (req, res, next) => {
+  const { error } = commentSchema.validate(req.body);
+  if (error) {
+    const errorMessage = error.details.map((el) => el.message).join(", ");
+    console.log(error);
+    throw new ExpressError(errorMessage, 400);
+  } else {
+    next();
+  }
 };
 
 module.exports.isStudygroupAuthor = async (req, res, next) => {

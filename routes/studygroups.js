@@ -4,17 +4,9 @@ const Studygroup = require("../models/studygroup");
 const ExpressError = require("../utils/ExpressError");
 const catchAsync = require("../utils/catchAsync");
 const { studygroupSchema } = require("../utils/validateSchemas");
-const { isLoggedIn, isStudygroupAuthor } = require("../middleware");
+const { isLoggedIn, isStudygroupAuthor, validateStudygroup } = require("../middleware");
 
-const validateStudygroup = (req, res, next) => {
-  const { error } = studygroupSchema.validate(req.body);
-  if (error) {
-    const errorMessage = error.details.map((el) => el.message).join(", ");
-    throw new ExpressError(errorMessage, 400);
-  } else {
-    next();
-  }
-};
+
 
 router.get(
   "/",
