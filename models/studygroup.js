@@ -1,13 +1,18 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+const ImageSchema = new Schema({
+  url: String,
+  filename: String,
+});
+
 const StudygroupSchema = new Schema({
   title: String,
   subject: String,
   location: String,
   address: String,
   date: Date,
-  image: String,
+  images: [ImageSchema],
   description: String,
   capacity: Number,
   participants: [String],
@@ -19,8 +24,8 @@ const StudygroupSchema = new Schema({
   ],
   author: {
     type: Schema.Types.ObjectId,
-    ref: 'User'
-  }
+    ref: "User",
+  },
 });
 
 module.exports = mongoose.model("Studygroup", StudygroupSchema);

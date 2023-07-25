@@ -1,7 +1,13 @@
 <% layout('layouts/boilerplate') -%>
 <div class="col-6 offset-3 my-3">
   <h1 class="text-center">스터디그룹 만들기</h1>
-  <form action="/studygroups" method="POST" class="needs-validation" novalidate>
+  <form
+    action="/studygroups"
+    method="POST"
+    class="needs-validation"
+    novalidate
+    enctype="multipart/form-data"
+  >
     <div class="my-3">
       <label class="form-label" for="title">스터디 이름</label>
       <input
@@ -50,10 +56,16 @@
         required
       />
     </div>
-    <div class="my-3">
+    <!-- <div class="my-3">
       <label for="image" class="form-label">이미지 url</label>
-      <input type="text" class="form-control" id="image" name="studygroup[image]" placeholder="이미지 url"/>
-    </div>
+      <input
+        type="text"
+        class="form-control"
+        id="image"
+        name="studygroup[image]"
+        placeholder="이미지 url"
+      />
+    </div> -->
     <div class="my-3">
       <label class="form-label" for="description">스터디 설명</label>
       <textarea
@@ -63,6 +75,16 @@
         name="studygroup[description]"
         required
       ></textarea>
+    </div>
+    <div>
+      <label for="images" class="form-file-label">이미지 선택</label>
+      <input
+        type="file"
+        class="form-file-input"
+        id="images"
+        name="images"
+        multiple
+      />
     </div>
     <div>
       <button type="submit" class="my-3 btn btn-success">저장하기</button>

@@ -1,8 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const Studygroup = require("../models/studygroup");
 const catchAsync = require("../utils/catchAsync");
 const studygroups = require("../controllers/studygroups");
+const multer = require("multer");
+const { storage } = require("../cloudinary");
+const upload = multer({ storage });
+
 const {
   isLoggedIn,
   isStudygroupAuthor,
@@ -14,6 +17,7 @@ router
   .get(catchAsync(studygroups.index))
   .post(
     isLoggedIn,
+    upload.array("images"),
     validateStudygroup,
     catchAsync(studygroups.createStudygroup)
   );
@@ -32,8 +36,9 @@ router
   .get(catchAsync(studygroups.showStudygroup))
   .put(
     isLoggedIn,
+    upload.array("iamges"),
     isStudygroupAuthor,
-    validateStudygroup,
+    // validateStudygroup,
     catchAsync(studygroups.editStudygroup)
   )
   .delete(
