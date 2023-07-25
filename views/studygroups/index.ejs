@@ -13,22 +13,22 @@
   </div>
   <ul class="m-0 p-0">
     <div class="row justify-content-between align-items-center">
-      <% for(const group of studygroups){ %>
+      <% for(const studygroup of studygroups){ %>
       <div class="card text-dark bg-light m-3 col-md-5">
         <div class="row justify-content-center align-items-center">
           <div class="col-md-7">
-            <img class="img-fluid" src="<%=group.image %>" />
+            <img class="img-fluid" src="<%=studygroup.image %>" />
           </div>
           <div class="col-md-5">
             <div class="card-body">
-              <h5 class="card-title"><%= group.title %></h5>
+              <h5 class="card-title"><%= studygroup.title %></h5>
               <p class="card-text">
                 <small class="text-muted"
-                  ><%= group.participants.length %>/<%=group.capacity %></small
+                  ><%= studygroup.participants.length %>/<%=studygroup.capacity %></small
                 >
               </p>
-              <p class="card-text text-truncat"><%= group.subject %></p>
-              <a href="/studygroups/<%= group._id %>">상세정보</a>
+              <p class="card-text text-truncat"><%= studygroup.subject %></p>
+              <a href="/studygroups/<%= studygroup._id %>">상세정보</a>
             </div>
           </div>
         </div>
