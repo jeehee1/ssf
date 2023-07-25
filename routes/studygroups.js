@@ -38,7 +38,7 @@ router
     isLoggedIn,
     upload.array("iamges"),
     isStudygroupAuthor,
-    // validateStudygroup,
+    validateStudygroup,
     catchAsync(studygroups.editStudygroup)
   )
   .delete(

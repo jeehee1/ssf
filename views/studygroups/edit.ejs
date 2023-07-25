@@ -6,6 +6,7 @@
     method="POST"
     class="needs-validation"
     novalidate
+    enctype="multipart/form-data"
   >
     <div class="my-3">
       <label class="form-label" for="title">스터디 이름</label>
@@ -83,16 +84,16 @@
 <%=studygroup.description %></textarea
       >
     </div>
-    <!-- <div>
+    <div>
       <label for="images" class="form-file-label">이미지 선택</label>
       <input
         type="file"
         class="form-file-input"
         id="images"
-        name="images"
+        name="studygroup[images]"
         multiple
       />
-    </div> -->
+    </div>
     <div>
       <button type="submit" class="my-3 btn btn-success">저장하기</button>
     </div>
