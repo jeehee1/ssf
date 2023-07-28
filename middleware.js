@@ -16,7 +16,7 @@ module.exports.validateStudygroup = (req, res, next) => {
   const { error } = studygroupSchema.validate(req.body);
   if (error) {
     const errorMessage = error.details.map((el) => el.message).join(", ");
-    throw new ExpressError(errorMessage, 400);
+    throw new ExpressError("validation error : " + errorMessage, 400);
   } else {
     next();
   }

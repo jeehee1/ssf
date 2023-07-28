@@ -22,6 +22,7 @@ router
     catchAsync(studygroups.createStudygroup)
   );
 
+
 router.get("/new", studygroups.renderNewStudygroupForm);
 
 router.get(
@@ -36,7 +37,7 @@ router
   .get(catchAsync(studygroups.showStudygroup))
   .put(
     isLoggedIn,
-    upload.array("iamges"),
+    upload.array("images"),
     isStudygroupAuthor,
     validateStudygroup,
     catchAsync(studygroups.editStudygroup)
