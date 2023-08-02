@@ -56,6 +56,40 @@
         required
       />
     </div>
+    <!-- 카카오 주소찾기 -->
+    <div>
+      <input type="text" id="sample4_postcode" placeholder="우편번호" hidden />
+      <input
+        type="button"
+        onclick="sample4_execDaumPostcode()"
+        value="우편번호 찾기"
+      /><br />
+      <input
+        type="text"
+        id="sample4_roadAddress"
+        name="studygroup[address]"
+        placeholder="도로명주소"
+      />
+      <input
+        type="text"
+        id="sample4_jibunAddress"
+        placeholder="지번주소"
+        hidden
+      />
+      <span id="guide" style="color: #999; display: none"></span>
+      <input
+        type="text"
+        id="sample4_detailAddress"
+        placeholder="상세주소"
+        hidden
+      />
+      <input
+        type="text"
+        id="sample4_extraAddress"
+        placeholder="참고항목"
+        hidden
+      />
+    </div>
     <!-- <div class="my-3">
       <label for="image" class="form-label">이미지 url</label>
       <input
@@ -91,3 +125,6 @@
     </div>
   </form>
 </div>
+
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="/javascripts/kakaoAddress.js"></script>

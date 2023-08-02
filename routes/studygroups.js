@@ -22,7 +22,6 @@ router
     catchAsync(studygroups.createStudygroup)
   );
 
-
 router.get("/new", studygroups.renderNewStudygroupForm);
 
 router.get(

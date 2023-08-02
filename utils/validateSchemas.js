@@ -6,6 +6,7 @@ module.exports.studygroupSchema = Joi.object({
     subject: Joi.string().required(),
     capacity: Joi.number().required().min(1),
     location: Joi.string().required(),
+    address: Joi.string().required(),
     // images: Joi.array().items(
     //   Joi.object({
     //     url: Joi.string(),
