@@ -37,7 +37,7 @@ module.exports.isStudygroupAuthor = async (req, res, next) => {
   const { id } = req.params;
   const studygroup = await Studygroup.findById(id);
   if (!studygroup.author.equals(req.user._id)) {
-    req.flash("error", "수정하거나 삭제할 수 없습니다");
+    req.flash("error", "작성자만 수정 삭제할 수 있습니다");
     return res.redirect(`/studygroups/${id}`);
   }
   next();
@@ -47,7 +47,7 @@ module.exports.isCommentAuthor = async (req, res, next) => {
   const { id, commentId } = req.params;
   const comment = await Comment.findById(commentId);
   if (!comment.author.equals(req.user._id)) {
-    req.flash("error", "삭제 권한이 없습니다");
+    req.flash("error", "작성자만 수정 삭제할 수 있습니다");
     return res.redirect(`/studygroups/${id}`);
   }
   next();

@@ -99,7 +99,7 @@
       class="needs-validation"
       novalidate
     >
-      <div class="form-group col-6 offset-3">
+      <div class="form-group col-10 offset-1">
         <label class="form-text" for="comment">참여자들의 한마디</label>
         <textarea
           class="form-control my-3"
@@ -112,21 +112,22 @@
         <button class="btn btn-success my-3">등록하기</button>
       </div>
     </form>
-    <ul>
+    <ul class="col-10 offset-1 list-group list-group-flush">
       <% for(const comment of studygroup.comments){ %>
-      <li>
-        <div>
-          <%= comment.body %> - <%= comment.date.toString() %> <%=
-          comment.author.username %>
+      <li class="list-group-item">
+        <div class="container">
+          <%= comment.body %> - <%= comment.date.getFullYear() %>-<%=
+          comment.date.getMonth()+1%> <%= comment.author.username %> <%
+          if(currentUser && comment.author.equals(currentUser._id)){ %>
+          <form
+            class="d-inline"
+            action="/studygroups/<%= studygroup._id %>/comments/<%= comment._id %>?_method=DELETE"
+            method="POST"
+          >
+            <button class="btn btn-danger btn-sm">삭제</button>
+          </form>
+          <% } %>
         </div>
-        <% if(currentUser && comment.author.equals(currentUser._id)){ %>
-        <form
-          action="/studygroups/<%= studygroup._id %>/comments/<%= comment._id %>?_method=DELETE"
-          method="POST"
-        >
-          <button>삭제</button>
-        </form>
-        <% } %>
       </li>
       <% } %>
     </ul>

@@ -1,4 +1,5 @@
 const Studygroup = require("../models/studygroup");
+const Comment = require("../models/comment");
 const { cloudinary } = require("../cloudinary");
 
 module.exports.index = async (req, res) => {
@@ -83,6 +84,9 @@ module.exports.editStudygroup = async (req, res) => {
 
 module.exports.deleteStudygroup = async (req, res) => {
   const { id } = req.params;
+  const studygroup = await Studygroup.findById(id);
+  const commentsId = studygroup.comments;
+  await Comment.deleteMany({ _id: { $in: commentsId } });
   await Studygroup.findByIdAndDelete(id);
   res.redirect("/studygroups");
 };
