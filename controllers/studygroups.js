@@ -12,13 +12,14 @@ module.exports.renderNewStudygroupForm = (req, res) => {
 };
 
 module.exports.createStudygroup = async (req, res) => {
-  console.log(req.files);
   const studygroup = new Studygroup({ ...req.body.studygroup });
   studygroup.date = new Date();
-  studygroup.images = req.files.map((f) => ({
-    url: f.path,
-    filename: f.filename,
-  }));
+  if (req.files.length > 0) {
+    studygroup.images = req.files.map((f) => ({
+      url: f.path,
+      filename: f.filename,
+    }));
+  }
   studygroup.author = req.user._id;
   await studygroup.save();
   req.flash("success", "등록이 완료되었습니다");
@@ -43,7 +44,7 @@ module.exports.showStudygroup = async (req, res) => {
     .populate("author");
   if (!studygroup) {
     req.flash("error", "스터디그룹을 찾을 수 없습니다");
-    return res.redirect("/studygroups");    
+    return res.redirect("/studygroups");
   }
   req.session.returnTo = `/studygroups/${id}`;
   res.render("studygroups/show", { studygroup });
@@ -51,7 +52,6 @@ module.exports.showStudygroup = async (req, res) => {
 
 module.exports.editStudygroup = async (req, res) => {
   const { id } = req.params;
-  console.log("edit");
   console.log(req.body);
   const studygroup = await Studygroup.findByIdAndUpdate(id, {
     ...req.body.studygroup,
@@ -60,12 +60,15 @@ module.exports.editStudygroup = async (req, res) => {
     req.flash("error", "스터디그룹을 찾을 수 없습니다");
     return res.redirect("/studygroups");
   }
-  const images = req.files.map((f) => ({
-    url: f.path,
-    filename: f.filename,
-  }));
-  studygroup.images.push(...images);
-  await studygroup.save();
+  if (req.files.length > 0) {
+    console.log("req.files");
+    const images = req.files.map((f) => ({
+      url: f.path,
+      filename: f.filename,
+    }));
+    studygroup.images.push(...images);
+    await studygroup.save();
+  }
   if (req.body.deleteImages) {
     for (let filename of req.body.deleteImages) {
       await cloudinary.uploader.destroy(filename);
