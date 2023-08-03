@@ -116,17 +116,29 @@
       <% for(const comment of studygroup.comments){ %>
       <li class="list-group-item">
         <div class="container">
-          <%= comment.body %> - <%= comment.date.getFullYear() %>-<%=
-          comment.date.getMonth()+1%> <%= comment.author.username %> <%
-          if(currentUser && comment.author.equals(currentUser._id)){ %>
-          <form
-            class="d-inline"
-            action="/studygroups/<%= studygroup._id %>/comments/<%= comment._id %>?_method=DELETE"
-            method="POST"
-          >
-            <button class="btn btn-danger btn-sm">삭제</button>
-          </form>
-          <% } %>
+          <div class="row">
+            <div class="col-9">
+              <%= comment.body %>
+              <span class="text-sm text-muted"
+                ><%= comment.author.username %></span
+              >
+            </div>
+            <div class="col-3">
+              <span
+                ><%= comment.date.getFullYear() %>-<%=
+                comment.date.getMonth()+1%>-<%= comment.date.getDate()%></span
+              >
+              <% if(currentUser && comment.author.equals(currentUser._id)){ %>
+              <form
+                class="d-inline"
+                action="/studygroups/<%= studygroup._id %>/comments/<%= comment._id %>?_method=DELETE"
+                method="POST"
+              >
+                <button class="btn btn-danger btn-sm">삭제</button>
+              </form>
+              <% } %>
+            </div>
+          </div>
         </div>
       </li>
       <% } %>
