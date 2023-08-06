@@ -39,6 +39,7 @@ module.exports.renderEditStudygroupForm = async (req, res) => {
 };
 
 module.exports.showStudygroup = async (req, res) => {
+  console.log(res.locals)
   const { id } = req.params;
   const studygroup = await Studygroup.findById(id)
     .populate({ path: "comments", populate: { path: "author" } })
@@ -89,4 +90,31 @@ module.exports.deleteStudygroup = async (req, res) => {
   await Comment.deleteMany({ _id: { $in: commentsId } });
   await Studygroup.findByIdAndDelete(id);
   res.redirect("/studygroups");
+};
+
+module.exports.joinStudygroup = async (req, res) => {
+  const { id } = req.params;
+  const userId = req.user._id;
+  const studygroup = await Studygroup.findById(id);
+  if (!studygroup.participants.includes(userId)) {
+    studygroup.participants.push(userId);
+    await studygroup.save();
+  } else {
+    req.flash("error", "이미 그룹에 참여하고 있습니다");
+    return res.redirect(`/studygroups/${id}`);
+  }
+  res.redirect(`/studygroups/${id}`);
+};
+
+module.exports.leaveStudygroup = async (req, res) => {
+  const { id } = req.params;
+  const userId = req.user._id;
+  const studygroup = await Studygroup.findById(id);
+  if (studygroup.participants.includes(userId)) {
+    await studygroup.updateOne({ $pull: { participants: userId } });
+  } else {
+    req.flash("error", "그룹에 참여하고 있지 않습니다");
+    return res.redirect(`/studygroups/${id}`);
+  }
+  res.redirect(`/studygroups/${id}`);
 };

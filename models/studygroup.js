@@ -19,7 +19,7 @@ const StudygroupSchema = new Schema({
   images: [ImageSchema],
   description: String,
   capacity: Number,
-  participants: [String],
+  participants: { type: [Schema.Types.ObjectId], ref: "User" },
   comments: [
     {
       type: Schema.Types.ObjectId,

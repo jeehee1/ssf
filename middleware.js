@@ -33,6 +33,19 @@ module.exports.validateComment = (req, res, next) => {
   }
 };
 
+module.exports.isAbleToJoinGroup = async (req, res, next) => {
+  const { id } = req.params;
+  const studygroup = await Studygroup.findById(id);
+  if (studygroup.participants.length >= studygroup.capacity) {
+    req.flash("error", "해당 스터디그룹에 참여할 수 없습니다");
+    return res.redirect(`/studygroups/${id}`);
+  } else if (studygroup.participants.includes(req.user._id)) {
+    req.flash("error", "이미 스터디그룹의 멤버입니다");
+    return res.redirect(`/studygroups/${id}`);
+  }
+  next();
+};
+
 module.exports.isStudygroupAuthor = async (req, res, next) => {
   const { id } = req.params;
   const studygroup = await Studygroup.findById(id);

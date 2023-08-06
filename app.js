@@ -64,12 +64,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/makefakeuser", async (req, res, next) => {
-  const user = new User({ email: "jjjj@j.com", username: "jj " });
-  const newUser = await User.register(user, "123456");
-  res.send(newUser);
-});
-
 app.use("/", users);
 app.use("/studygroups", studygroups);
 app.use("/studygroups/:id/comments", comments);

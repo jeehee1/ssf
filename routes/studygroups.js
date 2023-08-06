@@ -10,7 +10,9 @@ const {
   isLoggedIn,
   isStudygroupAuthor,
   validateStudygroup,
+  isAbleToJoinGroup,
 } = require("../middleware");
+const studygroup = require("../models/studygroup");
 
 router
   .route("/")
@@ -23,6 +25,15 @@ router
   );
 
 router.get("/new", studygroups.renderNewStudygroupForm);
+
+router.post(
+  "/:id/join",
+  isLoggedIn,
+  isAbleToJoinGroup,
+  catchAsync(studygroups.joinStudygroup)
+);
+
+router.post("/:id/leave", isLoggedIn, catchAsync(studygroups.leaveStudygroup));
 
 router.get(
   "/:id/edit",
