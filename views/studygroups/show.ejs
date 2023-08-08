@@ -1,5 +1,5 @@
 <% layout('layouts/boilerplate') -%>
-<div class="container my-5">
+<div class="container my-5 p">
   <% if(currentUser && studygroup.author.equals(currentUser._id)) { %>
   <div class="container">
     <div class="row my-5 justify-content-end">
@@ -21,17 +21,15 @@
     </div>
   </div>
   <% } %>
-  <div class="row">
-    <div class="col-6">
+  <div class="d-flex flex-md-row flex-column justify-content-center gap-2">
+    <div class="col-md-6 mb-3">
       <div class="card">
         <div class="container">
           <div class="row align-items-center my-3">
             <div class="col-10">
               <h1><%= studygroup.title %></h1>
             </div>
-            <div class="col-2 align-self-end">
-              <p class="text-muted text-end"><%= studygroup.location%></p>
-            </div>
+            <div class="col-2">리더 <%= studygroup.author.username %></div>
           </div>
         </div>
         <div
@@ -70,12 +68,20 @@
         <div class="card-body">
           <div class="container">
             <div class="row justify-content-between align-items-center">
-              <div>리더 <%= studygroup.author.username %></div>
-              <div class="col-3">
-                <p class="m-0">
+              <div class="col-9">
+                <span class="m-0 fw-light">
                   <%= `${studygroup.participants.length}/${studygroup.capacity}`
-                  %>
-                </p>
+                  %><% if(currentUser
+                  &&!studygroup.participants.includes(currentUser._id)) { %>
+                  <form
+                  class="d-inline"
+                    action="/studygroups/<%= studygroup._id %>/join"
+                    method="POST"
+                  >
+                    <button class="btn btn-success btn-sm">가입하기</button>
+                  </form>
+                  <% } %>
+                </span>
               </div>
               <div class="col-3 text-end">
                 <p class="btn btn-primary btn-sm m-0">
@@ -83,38 +89,28 @@
                 </p>
               </div>
             </div>
-            <div>
-              <% if(currentUser
-              &&!studygroup.participants.includes(currentUser._id)) { %>
-              <form
-                action="/studygroups/<%= studygroup._id %>/join"
-                method="POST"
-              >
-                <button class="btn btn-success btn-sm">참여하기</button>
-              </form>
-              <% } %>
-            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-6">
-      <!-- 카카오맵 -->
+    <div class="col-md-6">
       <p class="card mb-5 p-2"><%= studygroup.description%></p>
-      <div id="map" style="width: 450px; height: 300px; margin: auto"></div>
+      <p class="text-muted text-end"><%= studygroup.location%></p>
+      <div id="map" style="width: 300px; height: 250px; margin: auto"></div>
     </div>
   </div>
-  <div class="mt-5">
+  <div class="my-5">
+    <% if(currentUser && studygroup.participants.includes(currentUser._id)){ %>
     <form
       action="/studygroups/<%= studygroup._id %>/comments"
       method="POST"
       class="needs-validation"
       novalidate
     >
-      <div class="form-group col-10 offset-1">
-        <label class="form-text" for="comment">참여자들의 한마디</label>
+      <div class="form-group mb-5">
+        <label class="form-text" for="comment">후기를 남겨주세요</label>
         <textarea
-          class="form-control my-3"
+          class="form-control my-1"
           name="comment[body]"
           id="comment"
           cols="30"
@@ -124,37 +120,37 @@
         <button class="btn btn-success my-3">등록하기</button>
       </div>
     </form>
-    <ul class="col-10 offset-1 list-group list-group-flush">
-      <% for(const comment of studygroup.comments){ %>
-      <li class="list-group-item">
-        <div class="container">
-          <div class="row">
-            <div class="col-9">
-              <%= comment.body %>
-              <span class="text-sm text-muted"
-                ><%= comment.author.username %></span
-              >
-            </div>
-            <div class="col-3">
-              <span
-                ><%= comment.date.getFullYear() %>-<%=
-                comment.date.getMonth()+1%>-<%= comment.date.getDate()%></span
-              >
-              <% if(currentUser && comment.author.equals(currentUser._id)){ %>
-              <form
-                class="d-inline"
-                action="/studygroups/<%= studygroup._id %>/comments/<%= comment._id %>?_method=DELETE"
-                method="POST"
-              >
-                <button class="btn btn-danger btn-sm">삭제</button>
-              </form>
-              <% } %>
-            </div>
+    <% } %>
+    <div class="card">
+      <div class="card-header">후기</div>
+      <ul class="list-group list-group-flush">
+        <% for(const comment of studygroup.comments){ %>
+        <li class="list-group-item">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <span class="text-sm text-muted"
+              ><%= comment.author.username %></span
+            >
+            <span>
+              <%= comment.date.getFullYear() %>-<%=
+              comment.date.getMonth()+1%>-<%= comment.date.getDate()%></span
+            >
           </div>
-        </div>
-      </li>
-      <% } %>
-    </ul>
+          <span
+            ><%= comment.body %> <% if(currentUser &&
+            comment.author.equals(currentUser._id)){ %>
+            <form
+              class="d-inline"
+              action="/studygroups/<%= studygroup._id %>/comments/<%= comment._id %>?_method=DELETE"
+              method="POST"
+            >
+              <button class="btn btn-danger btn-sm">삭제</button>
+            </form>
+            <% } %></span
+          >
+        </li>
+        <% } %>
+      </ul>
+    </div>
   </div>
   <% if(currentUser && studygroup.participants.includes(currentUser._id)){ %>
   <div>
