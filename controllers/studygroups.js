@@ -1,11 +1,26 @@
 const Studygroup = require("../models/studygroup");
 const Comment = require("../models/comment");
 const { cloudinary } = require("../cloudinary");
+const { subjects } = require("../seeds/subjects");
 
 module.exports.index = async (req, res) => {
-  const studygroups = await Studygroup.find({});
-  res.render("studygroups/index", { studygroups });
+  const subject = req.query.subject;
+  console.log(subject);
+  let studygroups;
+  if (subject !== undefined) {
+    studygroups = await Studygroup.find({ subject: subject });
+  } else {
+    studygroups = await Studygroup.find({});
+  }
+  res.render("studygroups/index", { studygroups, subjects, subject });
 };
+
+// module.exports.serchGroupWithSubject = async (req, res) => {
+//   const { subject } = req.params;
+//   const studygroups = await Studygroup.find({ subject: subject });
+//   console.log(studygroups);
+//   res.render("studygroups/index", { studygroups, subject, subjects });
+// };
 
 module.exports.renderNewStudygroupForm = (req, res) => {
   req.session.returnto = "/studygroups/new";
@@ -39,7 +54,6 @@ module.exports.renderEditStudygroupForm = async (req, res) => {
 };
 
 module.exports.showStudygroup = async (req, res) => {
-  console.log(res.locals)
   const { id } = req.params;
   const studygroup = await Studygroup.findById(id)
     .populate({ path: "comments", populate: { path: "author" } })

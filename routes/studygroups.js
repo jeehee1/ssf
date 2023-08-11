@@ -24,6 +24,8 @@ router
     catchAsync(studygroups.createStudygroup)
   );
 
+// router.get('/subjects/:subject', studygroups.serchGroupWithSubject)
+
 router.get("/new", studygroups.renderNewStudygroupForm);
 
 router.post(

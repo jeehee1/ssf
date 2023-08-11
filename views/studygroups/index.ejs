@@ -10,6 +10,32 @@
       >
     </div>
   </div>
+  <div class="d-inline dropdown mt-3 me-3">
+    <button
+      class="btn btn-secondary dropdown-toggle"
+      type="button"
+      id="dropdownMenuButton1"
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
+    >
+      과목을 선택하세요
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+      <li><a class="dropdown-item" href="/studygroups">모두</a></li>
+      <% for(const subject of subjects) {%>
+      <li>
+        <a class="dropdown-item" href="/studygroups?subject=<%=subject %>"
+          ><%= subject %></a
+        >
+      </li>
+      <% } %>
+    </ul>
+  </div>
+  <% if(subject !== undefined) { %>
+  <div class="d-inline badge rounded-pill bg-primary">
+    <%= subject %>(으)로 검색했어요
+  </div>
+  <% } %>
   <ul class="m-0 p-0">
     <div class="row justify-content-center align-items-center gap-5 my-5">
       <% for(const studygroup of studygroups){ %>
