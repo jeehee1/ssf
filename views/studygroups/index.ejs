@@ -86,6 +86,9 @@
   </div>
   <ul class="m-0 p-0">
     <div class="row justify-content-center align-items-center gap-5 my-5">
+      <% if(studygroups.length === 0){%>
+        <p class="text-center">조회된 스터디그룹이 없습니다</p>
+      <%} %>
       <% for(const studygroup of studygroups){ %>
       <div class="card p-0" style="width: 18rem">
         <img
