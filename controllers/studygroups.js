@@ -2,25 +2,28 @@ const Studygroup = require("../models/studygroup");
 const Comment = require("../models/comment");
 const { cloudinary } = require("../cloudinary");
 const { subjects } = require("../seeds/subjects");
+const { cities } = require("../seeds/cities");
 
 module.exports.index = async (req, res) => {
-  const subject = req.query.subject;
-  console.log(subject);
+  const { subject, city } = req.query;
   let studygroups;
-  if (subject !== undefined) {
+  if (city !== undefined && subject !== undefined) {
+    studygroups = await Studygroup.find({ city: city, subject: subject });
+  } else if (city === undefined && subject !== undefined) {
     studygroups = await Studygroup.find({ subject: subject });
+  } else if (city !== undefined && subject === undefined) {
+    studygroups = await Studygroup.find({ city: city });
   } else {
     studygroups = await Studygroup.find({});
   }
-  res.render("studygroups/index", { studygroups, subjects, subject });
+  res.render("studygroups/index", {
+    studygroups,
+    cities,
+    subjects,
+    subject,
+    city,
+  });
 };
-
-// module.exports.serchGroupWithSubject = async (req, res) => {
-//   const { subject } = req.params;
-//   const studygroups = await Studygroup.find({ subject: subject });
-//   console.log(studygroups);
-//   res.render("studygroups/index", { studygroups, subject, subjects });
-// };
 
 module.exports.renderNewStudygroupForm = (req, res) => {
   req.session.returnto = "/studygroups/new";
@@ -30,6 +33,8 @@ module.exports.renderNewStudygroupForm = (req, res) => {
 module.exports.createStudygroup = async (req, res) => {
   const studygroup = new Studygroup({ ...req.body.studygroup });
   studygroup.date = new Date();
+  studygroup.province = req.body.studygroup.location.split(" ")[0];
+  console.log(studygroup.province);
   if (req.files.length > 0) {
     studygroup.images = req.files.map((f) => ({
       url: f.path,

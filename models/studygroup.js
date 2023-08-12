@@ -13,6 +13,7 @@ ImageSchema.virtual("thumbnail").get(function () {
 const StudygroupSchema = new Schema({
   title: String,
   subject: String,
+  city: String,
   location: String,
   address: String,
   date: Date,
