@@ -48,27 +48,19 @@
         </div>
       </div>
     </div>
-    <div class="my-3">
-      <label class="form-label" for="location">위치</label>
-      <input
-        class="form-control"
-        type="text"
-        id="location"
-        name="studygroup[location]"
-        placeholder="위치"
-        value="<%= studygroup.location %>"
-        required
-      />
-    </div>
+
     <!-- 카카오 주소찾기 -->
     <div>
+      <label class="form-label" for="sample4_roadAddress">주소</label>
       <input type="text" id="sample4_postcode" placeholder="우편번호" hidden />
       <input
+        class="form-control btn-secondary"
         type="button"
         onclick="sample4_execDaumPostcode()"
         value="우편번호 찾기"
       /><br />
       <input
+        class="form-control"
         type="text"
         id="sample4_roadAddress"
         name="studygroup[address]"
@@ -93,6 +85,18 @@
         id="sample4_extraAddress"
         placeholder="참고항목"
         hidden
+      />
+    </div>
+    <div class="my-3">
+      <label class="form-label" for="location">장소</label>
+      <input
+        class="form-control"
+        type="text"
+        id="location"
+        name="studygroup[location]"
+        placeholder="장소"
+        value="<%= studygroup.location %>"
+        required
       />
     </div>
     <!-- <div class="my-3">
