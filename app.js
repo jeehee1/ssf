@@ -69,7 +69,7 @@ app.use("/studygroups", studygroups);
 app.use("/studygroups/:id/comments", comments);
 
 app.get("/", (req, res) => {
-  res.render("home");
+  res.redirect("/studygroups");
 });
 
 app.all("*", (req, res, next) => {
