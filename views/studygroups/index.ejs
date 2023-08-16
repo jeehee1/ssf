@@ -94,7 +94,13 @@
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
           <li>
+            <% if(subject !== undefined) { %>
+            <a class="dropdown-item" href="/studygroups?subject=<%=subject %>"
+              >모두</a
+            >
+            <% } else {%>
             <a class="dropdown-item" href="/studygroups">모두</a>
+            <% } %>
           </li>
           <% for(const city of cities) {%>
           <li>
@@ -131,7 +137,15 @@
           과목을 선택하세요
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <% if(city !== undefined){ %>
+          <li>
+            <a class="dropdown-item" href="/studygroups?city=<%=city %>"
+              >모두</a
+            >
+          </li>
+          <% } else {%>
           <li><a class="dropdown-item" href="/studygroups">모두</a></li>
+          <% } %>
           <% for(const subject of subjects) {%>
           <li>
             <% if(city !== undefined){ %>

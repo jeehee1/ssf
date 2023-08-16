@@ -26,7 +26,7 @@ router
 
 // router.get('/subjects/:subject', studygroups.serchGroupWithSubject)
 
-router.get("/new", studygroups.renderNewStudygroupForm);
+router.get("/new", isLoggedIn, studygroups.renderNewStudygroupForm);
 
 router.post(
   "/:id/join",
