@@ -6,6 +6,9 @@ const { cities } = require("../seeds/cities");
 
 module.exports.index = async (req, res) => {
   const { subject, city } = req.query;
+  const todayStudygroups = await Studygroup.find({
+    date: { $gt: new Date(new Date().setHours(0, 0, 0)) },
+  });
   let studygroups;
   if (city !== undefined && subject !== undefined) {
     studygroups = await Studygroup.find({ city: city, subject: subject });
@@ -19,6 +22,7 @@ module.exports.index = async (req, res) => {
   res.render("studygroups/index", {
     studygroups,
     cities,
+    todayStudygroups,
     subjects,
     subject,
     city,
@@ -34,7 +38,6 @@ module.exports.createStudygroup = async (req, res) => {
   const studygroup = new Studygroup({ ...req.body.studygroup });
   studygroup.date = new Date();
   studygroup.province = req.body.studygroup.location.split(" ")[0];
-  console.log(studygroup.province);
   if (req.files.length > 0) {
     studygroup.images = req.files.map((f) => ({
       url: f.path,

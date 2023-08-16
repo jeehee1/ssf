@@ -10,87 +10,158 @@
       >
     </div>
   </div>
-  <div class="d-block mb-3">
-    <div class="d-inline dropdown mt-3 me-3">
-      <button
-        class="btn btn-secondary dropdown-toggle"
-        type="button"
-        id="dropdownMenuButton1"
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
+  <div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingOne">
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseOne"
+          aria-expanded="false"
+          aria-controls="collapseOne"
+        >
+          New! 오늘 등록된 스터디그룹을 확인해보세요
+        </button>
+      </h2>
+      <div
+        id="collapseOne"
+        class="accordion-collapse collapse"
+        aria-labelledby="headingOne"
+        data-bs-parent="#accordionExample"
       >
-        지역을 선택하세요
-      </button>
-      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-        <li>
-          <a class="dropdown-item" href="/studygroups">모두</a>
-        </li>
-        <% for(const city of cities) {%>
-        <li>
-          <% if(subject !== undefined){ %>
-          <a
-            class="dropdown-item"
-            href="/studygroups?city=<%=city %>&subject=<%=subject %>"
-            ><%= city %></a
-          >
-          <% } else {%>
-          <a class="dropdown-item" href="/studygroups?city=<%=city %>"
-            ><%= city %></a
-          >
+        <div class="accordion-body">
+          <% if(todayStudygroups.length === 0){ %>
+          <p class="text-center mb-5">새로 등록된 스터디그룹이 없습니다</p>
           <% } %>
-        </li>
-        <% } %>
-      </ul>
+          <ul class="m-0 p-0 gap-5">
+            <div
+              class="row align-items-center gap-5 my-2"
+              style="flex-wrap: nowrap; overflow: auto"
+            >
+              <% for(const todayGroup of todayStudygroups){ %>
+              <li class="card m-0" style="width: 18rem">
+                <img
+                  style="width: auto"
+                  src="<%= todayGroup.images.length> 0? todayGroup.images[0].url :null%>"
+                  class="card-img-top"
+                  alt="..."
+                />
+                <div class="card-body">
+                  <h5 class="card-title"><%= todayGroup.title %></h5>
+                  <div class="card-text d-flex justify-content-between">
+                    <small class="text-muted"
+                      ><%= todayGroup.participants.length
+                      %>/<%=todayGroup.capacity %></small
+                    >
+                    <p class="btn btn-primary btn-sm text-truncat m-0">
+                      <%= todayGroup.subject %>
+                    </p>
+                  </div>
+                  <p class="card-text">
+                    Some quick example text to build on the card title and make
+                    up the bulk of the card's content.
+                  </p>
+                  <a
+                    style="
+                      text-decoration: none;
+                      color: rgb(53, 80, 104);
+                      font-weight: bold;
+                    "
+                    href="/studygroups/<%= todayGroup._id %>"
+                    >더보기</a
+                  >
+                </div>
+              </li>
+              <% } %>
+            </div>
+          </ul>
+        </div>
+      </div>
     </div>
-    <% if(city !== undefined) { %>
-    <div class="d-inline badge rounded-pill bg-primary me-3">
-      <%= city %>(으)로 검색했어요
-    </div>
-    <% } %>
   </div>
-  <div class="d-block mb-3">
-    <div class="d-inline dropdown mt-3 me-3">
-      <button
-        class="btn btn-secondary dropdown-toggle"
-        type="button"
-        id="dropdownMenuButton1"
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
-      >
-        과목을 선택하세요
-      </button>
-      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-        <li><a class="dropdown-item" href="/studygroups">모두</a></li>
-        <% for(const subject of subjects) {%>
-        <li>
-          <% if(city !== undefined){ %>
-          <a
-            class="dropdown-item"
-            href="/studygroups?city=<%=city %>&subject=<%=subject %>"
-            ><%= subject %></a
-          >
-          <% } else {%>
-          <a class="dropdown-item" href="/studygroups?subject=<%=subject %>"
-            ><%= subject %></a
-          >
+  <div class="d-flex mt-5 flex-column flex-md-row">
+    <div class="d-block mb-3">
+      <div class="d-inline dropdown mt-3 me-3">
+        <button
+          class="btn btn-secondary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton1"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          지역을 선택하세요
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <li>
+            <a class="dropdown-item" href="/studygroups">모두</a>
+          </li>
+          <% for(const city of cities) {%>
+          <li>
+            <% if(subject !== undefined){ %>
+            <a
+              class="dropdown-item"
+              href="/studygroups?city=<%=city %>&subject=<%=subject %>"
+              ><%= city %></a
+            >
+            <% } else {%>
+            <a class="dropdown-item" href="/studygroups?city=<%=city %>"
+              ><%= city %></a
+            >
+            <% } %>
+          </li>
           <% } %>
-        </li>
-        <% } %>
-      </ul>
+        </ul>
+      </div>
+      <% if(city !== undefined) { %>
+      <div class="d-inline badge rounded-pill bg-primary me-3">
+        <%= city %>(으)로 검색했어요
+      </div>
+      <% } %>
     </div>
-    <% if(subject !== undefined) { %>
-    <div class="d-inline badge rounded-pill bg-primary">
-      <%= subject %>(으)로 검색했어요
+    <div class="d-block mb-3">
+      <div class="d-inline dropdown mt-3 me-3">
+        <button
+          class="btn btn-secondary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton1"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          과목을 선택하세요
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <li><a class="dropdown-item" href="/studygroups">모두</a></li>
+          <% for(const subject of subjects) {%>
+          <li>
+            <% if(city !== undefined){ %>
+            <a
+              class="dropdown-item"
+              href="/studygroups?city=<%=city %>&subject=<%=subject %>"
+              ><%= subject %></a
+            >
+            <% } else {%>
+            <a class="dropdown-item" href="/studygroups?subject=<%=subject %>"
+              ><%= subject %></a
+            >
+            <% } %>
+          </li>
+          <% } %>
+        </ul>
+      </div>
+      <% if(subject !== undefined) { %>
+      <div class="d-inline badge rounded-pill bg-primary">
+        <%= subject %>(으)로 검색했어요
+      </div>
+      <% } %>
     </div>
-    <% } %>
   </div>
   <ul class="m-0 p-0">
     <div class="row justify-content-center align-items-center gap-5 my-5">
       <% if(studygroups.length === 0){%>
-        <p class="text-center">조회된 스터디그룹이 없습니다</p>
-      <%} %>
-      <% for(const studygroup of studygroups){ %>
-      <div class="card p-0" style="width: 18rem">
+      <p class="text-center">조회된 스터디그룹이 없습니다</p>
+      <%} %> <% for(const studygroup of studygroups){ %>
+      <li class="card p-0" style="width: 18rem">
         <img
           style="width: auto"
           src="<%= studygroup.images.length> 0? studygroup.images[0].url :null%>"
@@ -122,7 +193,7 @@
             >더보기</a
           >
         </div>
-      </div>
+      </li>
       <% } %>
     </div>
   </ul>
