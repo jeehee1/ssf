@@ -10,6 +10,9 @@ const engine = require("ejs-mate");
 const session = require("express-session");
 const flash = require("connect-flash");
 const ExpressError = require("./utils/ExpressError");
+const helmet = require("helmet");
+
+const mongoSanitize = require("express-mongo-sanitize");
 
 const passport = require("passport");
 const User = require("./models/user");
@@ -36,20 +39,67 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
+app.use(mongoSanitize({ replaceWith: "_" }));
 
 app.use(
   session({
+    name: "session",
     secret: "thisissecretkey",
     resave: false,
     saveUninitialized: true,
     cookie: {
       httpOnly: true,
+      // secure: true,
       expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
       maxAge: 1000 * 60 * 60 * 24 * 7,
+
     },
   })
 );
 app.use(flash());
+
+const scriptSrcUrls = [
+  "https://stackpath.bootstrapcdn.com/",
+  "https://dapi.kakao.com/",
+  "https://t1.daumcdn.net/",
+  "https://kit.fontawesome.com/",
+  "https://cdnjs.cloudflare.com/",
+  "https://cdn.jsdelivr.net",
+];
+const styleSrcUrls = [
+  "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css",
+  "https://kit-free.fontawesome.com/",
+  "https://stackpath.bootstrapcdn.com/",
+  "https://dapi.kakao.com/",
+  "https://t1.daumcdn.net/",
+  "https://fonts.googleapis.com/",
+  "https://use.fontawesome.com/",
+];
+const connectSrcUrls = ["https://dapi.kakao.com/", "https://t1.daumcdn.net/"];
+
+const fontSrcUrls = [];
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: [],
+      connectSrc: ["'self'", ...connectSrcUrls],
+      scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
+      styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
+      workerSrc: ["'self'", "blob:"],
+      objectSrc: [],
+      imgSrc: [
+        "'self'",
+        "blob:",
+        "data:",
+        "https://res.cloudinary.com/dzgbzobwo/",
+        "https://images.unsplash.com/",
+        "https://map.daumcdn.net/",
+        "https://t1.daumcdn.net/",
+      ],
+      fontSrc: ["'self'", ...fontSrcUrls],
+    },
+  })
+);
 
 app.use(passport.session());
 passport.use(User.createStrategy());

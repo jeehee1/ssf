@@ -1,2 +1,5 @@
 <%layout('layouts/boilerplate') %>
-<p class="text-center my-5"><%= err %></p>
+<p class="text-center my-5"><%= err.message %></p>
+<% if(process.env.NODE_ENV !== 'production') {%>
+<p class="text-center my-5"><%= err.stack %></p>
+<% } %>
