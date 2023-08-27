@@ -78,7 +78,8 @@
                 </p>
               </div>
               <% if(currentUser
-              &&!studygroup.participants.includes(currentUser._id)) { %>
+              &&!studygroup.participants.includes(currentUser._id) &&(
+              studygroup.author._id.toString() !== currentUser._id.toString())) { %>
               <div class="my-3">
                 <form
                   class="d-inline"

@@ -118,7 +118,10 @@ module.exports.joinStudygroup = async (req, res) => {
   const { id } = req.params;
   const userId = req.user._id;
   const studygroup = await Studygroup.findById(id);
-  if (!studygroup.participants.includes(userId)) {
+  if (
+    !studygroup.participants.includes(userId) &&
+      studygroup.author.toString() !== userId.toString()
+  ) {
     studygroup.participants.push(userId);
     await studygroup.save();
   } else {
