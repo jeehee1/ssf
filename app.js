@@ -15,9 +15,15 @@ const helmet = require("helmet");
 const mongoSanitize = require("express-mongo-sanitize");
 
 const passport = require("passport");
+const LocalStrategy = require("passport-local");
 const User = require("./models/user");
 
-mongoose.connect("mongodb://localhost:27017/ssf");
+const MongoStore = require("connect-mongo");
+
+const dbUrl = process.env.DB_URL || "mongodb://localhost:27017/ssf";
+// const dbUrl = "mongodb://localhost:27017/ssf";
+
+mongoose.connect(dbUrl);
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
@@ -41,21 +47,29 @@ app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(mongoSanitize({ replaceWith: "_" }));
 
-app.use(
-  session({
-    name: "session",
-    secret: "thisissecretkey",
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-      httpOnly: true,
-      // secure: true,
-      expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
-      maxAge: 1000 * 60 * 60 * 24 * 7,
+const secret = process.env.SECRET || "thisissecretkey";
 
-    },
-  })
-);
+const store = MongoStore.create({
+  mongoUrl: dbUrl,
+  crypto: { secret },
+  touchAfter: 24 * 3600,
+});
+
+const sessionConfig = {
+  store,
+  name: "session",
+  secret,
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    httpOnly: true,
+    // secure: true,
+    expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+    maxAge: 1000 * 60 * 60 * 24 * 7,
+  },
+};
+
+app.use(session(sessionConfig));
 app.use(flash());
 
 const scriptSrcUrls = [
@@ -101,8 +115,9 @@ app.use(
   })
 );
 
+app.use(passport.initialize());
 app.use(passport.session());
-passport.use(User.createStrategy());
+passport.use(new LocalStrategy(User.authenticate()));
 
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
