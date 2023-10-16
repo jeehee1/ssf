@@ -10,7 +10,7 @@ const engine = require("ejs-mate");
 const session = require("express-session");
 const flash = require("connect-flash");
 const ExpressError = require("./utils/ExpressError");
-const helmet = require("helmet");
+// const helmet = require("helmet");
 
 const mongoSanitize = require("express-mongo-sanitize");
 
@@ -20,8 +20,8 @@ const User = require("./models/user");
 
 const MongoStore = require("connect-mongo");
 
-// const dbUrl = process.env.DB_URL || "mongodb://localhost:27017/ssf";
-const dbUrl = "mongodb://localhost:27017/ssf";
+const dbUrl = process.env.DB_URL || "mongodb://localhost:27017/ssf";
+// const dbUrl = "mongodb://localhost:27017/ssf";
 
 mongoose.connect(dbUrl);
 
@@ -92,28 +92,28 @@ const styleSrcUrls = [
 const connectSrcUrls = ["https://dapi.kakao.com/", "https://t1.daumcdn.net/"];
 
 const fontSrcUrls = [];
-app.use(
-  helmet.contentSecurityPolicy({
-    directives: {
-      defaultSrc: [],
-      connectSrc: ["'self'", ...connectSrcUrls],
-      scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
-      styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
-      workerSrc: ["'self'", "blob:"],
-      objectSrc: [],
-      imgSrc: [
-        "'self'",
-        "blob:",
-        "data:",
-        "https://res.cloudinary.com/dzgbzobwo/",
-        "https://images.unsplash.com/",
-        "https://map.daumcdn.net/",
-        "https://t1.daumcdn.net/",
-      ],
-      fontSrc: ["'self'", ...fontSrcUrls],
-    },
-  })
-);
+// app.use(
+//   helmet.contentSecurityPolicy({
+//     directives: {
+//       defaultSrc: [],
+//       connectSrc: ["'self'", ...connectSrcUrls],
+//       scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
+//       styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
+//       workerSrc: ["'self'", "blob:"],
+//       objectSrc: [],
+//       imgSrc: [
+//         "'self'",
+//         "blob:",
+//         "data:",
+//         "https://res.cloudinary.com/dzgbzobwo/",
+//         "https://images.unsplash.com/",
+//         "https://map.daumcdn.net/",
+//         "https://t1.daumcdn.net/",
+//       ],
+//       fontSrc: ["'self'", ...fontSrcUrls],
+//     },
+//   })
+// );
 
 app.use(passport.initialize());
 app.use(passport.session());
