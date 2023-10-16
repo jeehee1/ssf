@@ -10,7 +10,7 @@ const engine = require("ejs-mate");
 const session = require("express-session");
 const flash = require("connect-flash");
 const ExpressError = require("./utils/ExpressError");
-// const helmet = require("helmet");
+const helmet = require("helmet");
 
 const mongoSanitize = require("express-mongo-sanitize");
 
@@ -21,7 +21,6 @@ const User = require("./models/user");
 const MongoStore = require("connect-mongo");
 
 const dbUrl = process.env.DB_URL || "mongodb://localhost:27017/ssf";
-// const dbUrl = "mongodb://localhost:27017/ssf";
 
 mongoose.connect(dbUrl);
 
@@ -79,6 +78,7 @@ const scriptSrcUrls = [
   "https://kit.fontawesome.com/",
   "https://cdnjs.cloudflare.com/",
   "https://cdn.jsdelivr.net",
+  "https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js",
 ];
 const styleSrcUrls = [
   "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css",
@@ -88,32 +88,38 @@ const styleSrcUrls = [
   "https://t1.daumcdn.net/",
   "https://fonts.googleapis.com/",
   "https://use.fontawesome.com/",
+  "https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js",
 ];
-const connectSrcUrls = ["https://dapi.kakao.com/", "https://t1.daumcdn.net/"];
+const connectSrcUrls = [
+  "https://dapi.kakao.com/",
+  "https://t1.daumcdn.net/",
+  "https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js",
+];
 
 const fontSrcUrls = [];
-// app.use(
-//   helmet.contentSecurityPolicy({
-//     directives: {
-//       defaultSrc: [],
-//       connectSrc: ["'self'", ...connectSrcUrls],
-//       scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
-//       styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
-//       workerSrc: ["'self'", "blob:"],
-//       objectSrc: [],
-//       imgSrc: [
-//         "'self'",
-//         "blob:",
-//         "data:",
-//         "https://res.cloudinary.com/dzgbzobwo/",
-//         "https://images.unsplash.com/",
-//         "https://map.daumcdn.net/",
-//         "https://t1.daumcdn.net/",
-//       ],
-//       fontSrc: ["'self'", ...fontSrcUrls],
-//     },
-//   })
-// );
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      frameSrc: ["*"],
+      connectSrc: ["'self'", ...connectSrcUrls],
+      scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
+      styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
+      workerSrc: ["'self'", "blob:"],
+      objectSrc: [],
+      imgSrc: [
+        "'self'",
+        "blob:",
+        "data:",
+        "https://res.cloudinary.com/dzgbzobwo/",
+        "https://images.unsplash.com/",
+        "https://map.daumcdn.net/",
+        "https://t1.daumcdn.net/",
+      ],
+      fontSrc: ["'self'", ...fontSrcUrls],
+    },
+  })
+);
 
 app.use(passport.initialize());
 app.use(passport.session());

@@ -53,7 +53,7 @@
       <input
         class="form-control btn-secondary"
         type="button"
-        onclick="sample4_execDaumPostcode()"
+        id="findAddress"
         value="우편번호 찾기"
       /><br />
       <input
@@ -94,16 +94,6 @@
         required
       />
     </div>
-    <!-- <div class="my-3">
-      <label for="image" class="form-label">이미지 url</label>
-      <input
-        type="text"
-        class="form-control"
-        id="image"
-        name="studygroup[image]"
-        placeholder="이미지 url"
-      />
-    </div> -->
     <div class="my-3">
       <label class="form-label" for="description">스터디 설명</label>
       <textarea
@@ -131,7 +121,4 @@
 </div>
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script
-  crossorigin="anonymous"
-  src="/javascripts/kakaoAddress.js"
-></script>
+<script src="/javascripts/kakaoAddress.js"></script>

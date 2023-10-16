@@ -53,7 +53,6 @@ module.exports.createStudygroup = async (req, res) => {
 module.exports.renderEditStudygroupForm = async (req, res) => {
   const { id } = req.params;
   const studygroup = await Studygroup.findById(id);
-  console.log(studygroup);
   if (!studygroup) {
     req.flash("error", "스터디그룹을 찾을 수 없습니다");
     return res.redirect("/studygroups");
@@ -76,7 +75,6 @@ module.exports.showStudygroup = async (req, res) => {
 
 module.exports.editStudygroup = async (req, res) => {
   const { id } = req.params;
-  console.log(req.body);
   const studygroup = await Studygroup.findByIdAndUpdate(id, {
     ...req.body.studygroup,
   });
@@ -85,7 +83,6 @@ module.exports.editStudygroup = async (req, res) => {
     return res.redirect("/studygroups");
   }
   if (req.files.length > 0) {
-    console.log("req.files");
     const images = req.files.map((f) => ({
       url: f.path,
       filename: f.filename,
