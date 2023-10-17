@@ -22,6 +22,19 @@
         required
       />
     </div>
+    <div class="my-3">
+      <label class="form-label" for="title">한줄설명</label>
+      <input
+        class="form-control"
+        type="text"
+        id="line"
+        name="studygroup[line]"
+        placeholder="한줄설명 - 40글자 이내로 입력해주세요"
+        maxlength="40"
+        value="<%= studygroup.line %>"
+        required
+      />
+    </div>
     <div class="container my-3">
       <div class="row">
         <div class="col ps-0">

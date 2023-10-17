@@ -66,11 +66,12 @@
                     `${studygroup.participants.length}/${studygroup.capacity}`
                     %>
                 </div>
+                <div class="my-3 p-0"><%=studygroup.line %></div>
                 <% if(currentUser
                 &&!studygroup.participants.includes(currentUser._id) &&(
                 studygroup.author._id.toString() !==
                 currentUser._id.toString())) { %>
-                <div class="my-3 text-end">
+                <div class="text-end">
                   <form
                     class="d-inline"
                     action="/studygroups/<%= studygroup._id %>/join"

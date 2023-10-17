@@ -28,6 +28,7 @@ const Joi = BaseJoi.extend(extension);
 module.exports.studygroupSchema = Joi.object({
   studygroup: Joi.object({
     title: Joi.string().required().escapeHTML(),
+    line: Joi.string().required().escapeHTML(),
     subject: Joi.string().required().escapeHTML(),
     capacity: Joi.number().required().min(1),
     location: Joi.string().required().escapeHTML(),

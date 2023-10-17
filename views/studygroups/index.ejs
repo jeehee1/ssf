@@ -178,7 +178,10 @@
         <div
           class="col my-3 d-flex justify-content-center justify-content-md-start"
         >
-          <li class="card p-0" style="background-color: #eee; width: 18rem; height: 26rem">
+          <li
+            class="card p-0"
+            style="background-color: #eee; width: 18rem; height: 26rem"
+          >
             <img
               style="height: 200px; object-fit: cover"
               src="<%= studygroup.images.length> 0? studygroup.images[0].url :null%>"
@@ -196,9 +199,8 @@
                   <%= studygroup.subject %>
                 </p>
               </div>
-              <p class="card-text">
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
+              <p class="card-text my-2">
+                <%= studygroup.line|| "Some quick example text to build on the card title and make up the bulk of the card's content."%>
               </p>
               <a
                 style="
