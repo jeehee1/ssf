@@ -42,7 +42,7 @@
               <% for(const todayGroup of todayStudygroups){ %>
               <li class="card m-0" style="width: 18rem">
                 <img
-                  style="width: auto"
+                  style="width: 100%; height: 200px"
                   src="<%= todayGroup.images.length> 0? todayGroup.images[0].url :null%>"
                   class="card-img-top"
                   alt="..."
@@ -145,8 +145,7 @@
           </li>
           <% } else {%>
           <li><a class="dropdown-item" href="/studygroups">모두</a></li>
-          <% } %>
-          <% for(const subject of subjects) {%>
+          <% } %> <% for(const subject of subjects) {%>
           <li>
             <% if(city !== undefined){ %>
             <a
@@ -171,44 +170,50 @@
     </div>
   </div>
   <ul class="m-0 p-0">
-    <div class="row justify-content-center align-items-center gap-5 my-5">
-      <% if(studygroups.length === 0){%>
-      <p class="text-center">조회된 스터디그룹이 없습니다</p>
-      <%} %> <% for(const studygroup of studygroups){ %>
-      <li class="card p-0" style="width: 18rem">
-        <img
-          style="width: auto"
-          src="<%= studygroup.images.length> 0? studygroup.images[0].url :null%>"
-          class="card-img-top"
-          alt="..."
-        />
-        <div class="card-body">
-          <h5 class="card-title"><%= studygroup.title %></h5>
-          <div class="card-text d-flex justify-content-between">
-            <small class="text-muted"
-              ><%= studygroup.participants.length %>/<%=studygroup.capacity
-              %></small
-            >
-            <p class="btn btn-primary btn-sm text-truncat m-0">
-              <%= studygroup.subject %>
-            </p>
-          </div>
-          <p class="card-text">
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </p>
-          <a
-            style="
-              text-decoration: none;
-              color: rgb(53, 80, 104);
-              font-weight: bold;
-            "
-            href="/studygroups/<%= studygroup._id %>"
-            >더보기</a
-          >
+    <div class="container">
+      <div class="row row-sm-cols-2 row-lg-cols-3">
+        <% if(studygroups.length === 0){%>
+        <p class="text-center">조회된 스터디그룹이 없습니다</p>
+        <%} %> <% for(const studygroup of studygroups){ %>
+        <div
+          class="col my-3 d-flex justify-content-center justify-content-md-start"
+        >
+          <li class="card p-0" style="background-color: #eee; width: 18rem; height: 26rem">
+            <img
+              style="height: 200px; object-fit: cover"
+              src="<%= studygroup.images.length> 0? studygroup.images[0].url :null%>"
+              class="card-img-top"
+              alt="..."
+            />
+            <div class="card-body">
+              <h5 class="card-title"><%= studygroup.title %></h5>
+              <div class="card-text d-flex justify-content-between">
+                <small class="text-muted"
+                  ><%= studygroup.participants.length %>/<%=studygroup.capacity
+                  %></small
+                >
+                <p class="btn btn-primary btn-sm text-truncat m-0">
+                  <%= studygroup.subject %>
+                </p>
+              </div>
+              <p class="card-text">
+                Some quick example text to build on the card title and make up
+                the bulk of the card's content.
+              </p>
+              <a
+                style="
+                  text-decoration: none;
+                  color: rgb(53, 80, 104);
+                  font-weight: bold;
+                "
+                href="/studygroups/<%= studygroup._id %>"
+                >더보기</a
+              >
+            </div>
+          </li>
         </div>
-      </li>
-      <% } %>
+        <% } %>
+      </div>
     </div>
   </ul>
 </div>
